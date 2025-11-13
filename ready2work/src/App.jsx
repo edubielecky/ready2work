@@ -6,6 +6,10 @@ import LoginPage from './pages/loginPage/loginPage';
 import ManagerDashboard from './pages/managerDashboard/ManagerDashboard';
 import MyTeamPage from './pages/minhaEquipe/MyTeamPage';
 import MyProfilePage from './pages/myProfilePage/MyProfilePage';
+import CollaboratorMainPage from './pages/mainPage/CollaboratorMainPage';
+import MinhasInscricoesPage from './pages/minhasInscricoes/MinhasInscricoesPage';
+import MeuDesempenhoPage from './pages/meuDesempenho/MeuDesempenhoPage';
+import CollaboratorProfilePage from './pages/myProfilePage/CollaboratorProfilePage';
 
 // Logins fictícios para simulação
 const fakeUsers = {
@@ -38,10 +42,18 @@ function App() {
           ) : (
             // Se estiver logado, define as rotas protegidas. Usamos um Fragment <> para agrupar múltiplas rotas.
             <>
-              <Route path="/" element={<MainPage />} />
+              <Route 
+                path="/" 
+                element={userRole === 'collaborator' ? <CollaboratorMainPage /> : <MainPage />} 
+              />
               <Route path="/dashboard" element={<ManagerDashboard />} />
               <Route path="/team" element={<MyTeamPage />} />
-              <Route path="/profile" element={<MyProfilePage />} />
+              <Route 
+                path="/profile" 
+                element={userRole === 'collaborator' ? <CollaboratorProfilePage /> : <MyProfilePage />} 
+              />
+              <Route path="/applications" element={<MinhasInscricoesPage />} />
+              <Route path="/performance" element={<MeuDesempenhoPage />} />
             </>
           )}
         </Routes>

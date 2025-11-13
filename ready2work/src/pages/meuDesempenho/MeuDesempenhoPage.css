@@ -1,0 +1,70 @@
+.performance-card {
+    animation-delay: calc(var(--card-index) * 100ms);
+}
+
+.performance-card .card-title {
+    color: #ffffff;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Reutilizando e adaptando o gráfico de porcentagem */
+.percentage-chart {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(var(--glow-color) calc(var(--percentage) * 1%), rgba(255, 255, 255, 0.1) 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.percentage-chart::before {
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    background: var(--card-bg);
+    border-radius: 50%;
+}
+
+.percentage-text {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.skill-bar-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    height: 10px;
+    margin-top: 0.25rem;
+}
+
+.skill-bar {
+    height: 100%;
+    background: var(--glow-color);
+    border-radius: 5px;
+}
+
+/* Feedbacks */
+.feedback-item {
+    border-left: 3px solid var(--glow-color);
+    padding-left: 1rem;
+}
+
+.feedback-text {
+    font-style: italic;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.feedback-author {
+    color: var(--text-color);
+    opacity: 0.7;
+}

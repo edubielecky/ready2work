@@ -1,0 +1,42 @@
+.applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.application-card {
+    padding: 1.5rem;
+    animation-delay: calc(var(--card-index) * 100ms);
+}
+
+.application-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.job-title {
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.status-analise {
+    background-color: #ffc107; /* Amarelo */
+}
+.status-aprovado {
+    background-color: #198754; /* Verde */
+}
+.status-rejeitado {
+    background-color: #dc3545; /* Vermelho */
+}

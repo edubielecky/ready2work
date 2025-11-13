@@ -63,23 +63,23 @@ const MainPage = () => {
               <h4>Resumo de Performance</h4>
               <div className="bar-chart-container">
                 <div className="bar-wrapper">
-                  <span className="bar-value">12%</span>
                   <div className="bar" style={{ height: '12%', '--delay-index': 1 }}></div>
+                  <span className="bar-value">12%</span>
                   <span className="bar-label">Abaixo</span>
                 </div>
                 <div className="bar-wrapper">
-                  <span className="bar-value">58%</span>
                   <div className="bar" style={{ height: '58%', '--delay-index': 2 }}></div>
+                  <span className="bar-value">58%</span>
                   <span className="bar-label">Na Média</span>
                 </div>
                 <div className="bar-wrapper">
-                  <span className="bar-value">30%</span>
                   <div className="bar" style={{ height: '30%', '--delay-index': 3 }}></div>
+                  <span className="bar-value">30%</span>
                   <span className="bar-label">Acima</span>
                 </div>
                 <div className="bar-wrapper">
-                  <span className="bar-value">10%</span>
                   <div className="bar" style={{ height: '10%', '--delay-index': 4 }}></div>
+                  <span className="bar-value">10%</span>
                   <span className="bar-label">Excelente</span>
                 </div>
               </div>

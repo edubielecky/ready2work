@@ -12,8 +12,8 @@ const Header = ({ userRole }) => {
     case 'collaborator':
       welcomeMessage = 'Bem-vindo, Colaborador!';
       navLinks = [
-        { to: '/dashboard', text: 'Dashboard' },
-        { to: '/tasks', text: 'Minhas Tarefas' },
+        { to: '/applications', text: 'Minhas Inscrições' },
+        { to: '/performance', text: 'Meu Desempenho' },
         { to: '/profile', text: 'Meu Perfil' },
       ];
       break;

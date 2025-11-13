@@ -99,24 +99,25 @@
 }
 
 .bar-value {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* Removemos a posição absoluta para que siga o fluxo do flexbox */
+    margin-top: 0.5rem; /* Adiciona um espaço entre a barra e o valor */
     font-size: 0.8rem;
     font-weight: 600;
     color: #fff;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    animation: fade-in-value 0.5s ease-out forwards;
+    /* Delay para aparecer após a barra crescer */
+    animation-delay: calc(var(--delay-index) * 150ms + 1000ms); 
 }
 
 @keyframes grow-bar {
     from { transform: scaleY(0); }
     to { transform: scaleY(1); }
 }
-
-.bar-wrapper:hover .bar-value {
-    opacity: 1;
+ 
+@keyframes fade-in-value {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .bar-label {
