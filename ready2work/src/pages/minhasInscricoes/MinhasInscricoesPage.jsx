@@ -1,32 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './MinhasInscricoesPage.css';
+import { getMyApplications } from '../../services/api'; // Importa a função da API
 
-// Dados fictícios de inscrições para simulação
-const fakeApplications = [
-  {
-    id: 1,
-    jobTitle: 'Desenvolvedor Front-end Sênior',
-    applicationDate: '25/07/2024',
-    status: 'Em Análise',
-    statusClass: 'analise' // Classe CSS para a cor do status
-  },
-  {
-    id: 2,
-    jobTitle: 'UI/UX Designer Pleno',
-    applicationDate: '18/07/2024',
-    status: 'Entrevista Agendada',
-    statusClass: 'aprovado'
-  },
-  {
-    id: 3,
-    jobTitle: 'Analista de Dados Jr',
-    applicationDate: '10/06/2024',
-    status: 'Rejeitado',
-    statusClass: 'rejeitado'
-  },
-];
+const MinhasInscricoesPage = ({ userId }) => {
+  // Estados para gerenciar os dados, carregamento e erros
+  const [applications, setApplications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const MinhasInscricoesPage = () => {
+  // useEffect para buscar os dados quando o componente for montado
+  useEffect(() => {
+    let isMounted = true; // Flag para verificar se o componente está montado
+
+    const fetchApplications = async () => {
+      try {
+        const data = await getMyApplications(userId);
+        if (isMounted) {
+          setApplications(data);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Ocorreu um erro ao buscar suas inscrições. Tente novamente mais tarde.');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchApplications();
+    return () => { isMounted = false; }; // Função de limpeza
+  }, [userId]);
+
+  // Renderização condicional baseada no estado
+  if (isLoading) {
+    return (
+      <div className="container mt-4 text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Carregando...</span>
+        </div>
+        <p className="text-light mt-2">Buscando suas inscrições...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mt-4 text-center">
+        <div className="alert alert-danger">{error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mt-4">
       <div className="text-center mb-5">
@@ -35,13 +61,13 @@ const MinhasInscricoesPage = () => {
       </div>
 
       <div className="d-flex flex-column gap-4">
-        {fakeApplications.map((app, index) => (
+        {applications.map((app, index) => (
           <div key={app.id} className="glass-card p-4" style={{ '--card-index': index + 1 }}>
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <h4 className="h5 fw-bold text-white mb-0">{app.jobTitle}</h4>
-              <span className={`badge rounded-pill fs-6 status-${app.statusClass}`}>{app.status}</span>
+            <div className="d-flex justify-content-between align-items-start">
+              <h4 className="h5 fw-bold text-white mb-1">{app.title}</h4>
+              <span className={`badge rounded-pill fs-6 status-${app.status_class}`}>{app.status}</span>
             </div>
-            <p className="application-date text-light opacity-75">Inscrição realizada em: {app.applicationDate}</p>
+            <p className="application-date text-light opacity-75 mb-0">Inscrição realizada em: {app.date}</p>
           </div>
         ))}
       </div>

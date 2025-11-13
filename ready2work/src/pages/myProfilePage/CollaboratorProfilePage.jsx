@@ -1,33 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CollaboratorProfilePage.css';
-
-// Dados fictícios do perfil do colaborador
-const initialCollaboratorProfile = {
-  name: 'Colaborador Exemplo',
-  role: 'Desenvolvedor Front-end Pleno',
-  email: 'colaborador.exemplo@ready2work.com',
-  joinDate: '10/01/2022',
-  department: 'Tecnologia',
-  manager: 'Gestor Exemplo',
-  skills: [
-    { name: 'React', level: 'Avançado' },
-    { name: 'JavaScript', level: 'Avançado' },
-    { name: 'CSS', level: 'Intermediário' },
-    { name: 'Node.js', level: 'Básico' },
-  ],
-  careerHistory: [
-    { role: 'Desenvolvedor Front-end Pleno', period: 'Jan/2023 - Atual' },
-    { role: 'Desenvolvedor Front-end Júnior', period: 'Jan/2022 - Dez/2022' },
-  ],
-  trainings: [
-    'Curso Avançado de React Hooks',
-    'Workshop de Design Systems',
-    'Certificação em Metodologias Ágeis',
-  ]
-};
+import { getCollaboratorProfile } from '../../services/api';
 
 const CollaboratorProfilePage = () => {
-  const [profile] = useState(initialCollaboratorProfile);
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProfile = async () => {
+      try {
+        // Por enquanto, vamos buscar o usuário com ID 1 como exemplo
+        const profileData = await getCollaboratorProfile(1);
+        if (isMounted) {
+          setProfile(profileData);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err.message);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
+    return () => { isMounted = false; };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="container mt-4 text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Carregando...</span>
+        </div>
+        <p className="text-light mt-2">Carregando perfil...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mt-4 text-center">
+        <div className="alert alert-danger">{error}</div>
+      </div>
+    );
+  }
+
+  // Se o perfil não for encontrado por algum motivo
+  if (!profile) {
+    return <div className="container mt-4 text-center"><div className="alert alert-warning">Perfil não disponível.</div></div>;
+  }
 
   return (
     <div className="container mt-4">
@@ -93,3 +119,5 @@ const CollaboratorProfilePage = () => {
 };
 
 export default CollaboratorProfilePage;
+
+

@@ -6,21 +6,27 @@ from models.colaborador import Colaborador
 from models.gestor import Gestor
 
 # Criando um novo colaborador
-colab1 = Colaborador(1, "João Silva", "joao@empresa.com", "Assistente Técnico", "Eduardo Bielecky", "Manutenção", 2)
-colab1.adicionar_habilidade("Soldagem")
-colab1.adicionar_soft_skill("Trabalho em equipe")
-colab1.avaliacao_desempenho.append(8.7)
-colab1.atualizar_status_vaga("Em análise")
+colab1 = Colaborador(
+    id=3, # Usando um ID diferente para não conflitar com o seed
+    name="João Silva",
+    email="joao@empresa.com",
+    role="Assistente Técnico",
+    department="Manutenção",
+    manager="Eduardo Bielecky",
+    joinDate="01/03/2021"
+)
+colab1.adicionar_habilidade({'name': 'Soldagem', 'level': 'Intermediário'})
+colab1.adicionar_soft_skill("Trabalho em equipe") # Soft skills podem ser mantidas para uso futuro
+colab1.atualizar_status_vaga("Em análise") # Status de vaga interna
 
 # Salvando o colaborador no mock
 salvar_colaborador(colab1)
 
 # Listando todos os colaboradores
 colaboradores = listar_colaboradores()
-
 print("\n📋 Lista de colaboradores cadastrados:\n")
 for c in colaboradores:
-    print(f"🧑 {c['nome']} | Cargo: {c['cargo_atual']} | Setor: {c['setor']} | Status: {c['status_vaga']}")
+    print(f"🧑 {c['name']} | Cargo: {c['role']} | Setor: {c['department']} | Status: {c.get('status_vaga', 'N/A')}")
 
 
 #---------------------------------------------------GESTOR---------------------------------------------------
@@ -28,7 +34,7 @@ for c in colaboradores:
 # Criando um gestor
 gestor1 = Gestor(
     id=1,
-    nome="Carlos Silva",
+    nome="Carlos Silva", # 'nome' está correto para Gestor conforme o modelo
     email="carlos.silva@empresa.com",
     setor_responsavel="Gerente Comercial",
     permissao="Administrador"

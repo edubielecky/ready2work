@@ -13,7 +13,7 @@ import CollaboratorProfilePage from './pages/myProfilePage/CollaboratorProfilePa
 
 // Logins fictícios para simulação
 const fakeUsers = {
-  'colaborador': { password: '123', role: 'collaborator' },
+  'colaborador': { password: '123', role: 'collaborator', id: 1 },
   'gestor': { password: '123', role: 'manager' },
   'diretor': { password: '123', role: 'director' },
 };
@@ -21,11 +21,14 @@ const fakeUsers = {
 function App() {
   const [userRole, setUserRole] = useState(null); // Começa como null (não logado)
 
+  // Simulação de ID do usuário logado. No futuro, isso virá do estado de autenticação.
+  const loggedInUserId = 1;
+
   const handleLogin = (username, password) => {
     const user = fakeUsers[username];
     if (user && user.password === password) {
-      setUserRole(user.role);
-      return true; // Sucesso no login
+      setUserRole(user.role); // <-- AQUI ESTAVA FALTANDO ATUALIZAR O ESTADO
+      return true;
     }
     return false; // Falha no login
   };
@@ -52,7 +55,7 @@ function App() {
                 path="/profile" 
                 element={userRole === 'collaborator' ? <CollaboratorProfilePage /> : <MyProfilePage />} 
               />
-              <Route path="/applications" element={<MinhasInscricoesPage />} />
+              <Route path="/applications" element={<MinhasInscricoesPage userId={loggedInUserId} />} />
               <Route path="/performance" element={<MeuDesempenhoPage />} />
             </>
           )}

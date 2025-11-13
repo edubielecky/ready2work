@@ -12,18 +12,32 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 def salvar_colaborador(colaborador):
-    try:
-        with open(DATA_PATH, "r") as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        data = []
+    data = []
+    if os.path.exists(DATA_PATH):
+        try:
+            with open(DATA_PATH, "r", encoding='utf-8') as f:
+                content = f.read()
+                if content: # Apenas tenta carregar se o arquivo não estiver vazio
+                    data = json.loads(content)
+        except json.JSONDecodeError:
+            # Se o arquivo estiver malformado, trata como se estivesse vazio
+            pass
 
-    for colaboradores in data:
-        if colaboradores ["id"] == colaborador.id or colaboradores["email"] == colaborador.email:
-            print(f"⚠️ O colaborador {colaborador.nome} já está cadastrado. Nenhuma ação necessária.")
+    for c in data:
+        if c["id"] == colaborador.id or c["email"] == colaborador.email:
+            print(f"⚠️ O colaborador com ID {colaborador.id} ou email {colaborador.email} já está cadastrado.")
             return
 
-    data.append(colaborador.__dict__)  # salva como dicionário
+    # Transforma o objeto em um dicionário para salvar no JSON
+    colaborador_dict = {
+        "id": colaborador.id,
+        "name": colaborador.name,
+        "email": colaborador.email,
+        "role": colaborador.role,
+        "department": colaborador.department,
+        "applications": colaborador.applications # Garante que as inscrições sejam salvas
+    }
+    data.append(colaborador_dict)
 
     with open(DATA_PATH, "w") as f:
         json.dump(data, f, indent=4)
@@ -54,8 +68,8 @@ def salvar_gestor(gestor):
 
     for g in data:
         if g["id"] == gestor.id or g["email"] == gestor.email:
-             print(f"⚠️ O gestor {gestor.nome} já está cadastrado.")
-        return
+            print(f"⚠️ O gestor {gestor.nome} já está cadastrado.")
+            return
     
     data.append(gestor.__dict__)
 
@@ -68,4 +82,3 @@ def listar_gestores():
             return json.load(f)
     except FileNotFoundError:
         return []
-
