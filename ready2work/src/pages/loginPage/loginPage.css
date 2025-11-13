@@ -1,0 +1,115 @@
+/* Importa uma fonte moderna para um visual mais limpo */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Define variáveis de cor para facilitar a manutenção do tema escuro */
+:root {
+  --glow-color: rgba(0, 170, 255, 0.7);
+  --card-bg: rgba(25, 25, 40, 0.65);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-color: #f0f0f0;
+  --muted-text-color: #a0a0a0;
+}
+
+/* Container principal que ocupa a tela inteira */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden; /* Garante que o gradiente não cause barras de rolagem */
+  position: relative;
+  background-color: #111; /* Cor de fundo base */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Pseudo-elemento para criar o fundo animado */
+.login-container::before {
+  content: '';
+  position: absolute;
+  /* O "spotlight" que segue o mouse */
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  width: 600px; /* Tamanho do círculo de luz */
+  height: 600px;
+  background: radial-gradient(circle, var(--glow-color) 0%, transparent 40%),
+              radial-gradient(circle, #ff00c3 0%, transparent 45%),
+              radial-gradient(circle, #6200ff 0%, transparent 40%);
+  opacity: 0.4;
+  filter: blur(100px);
+  transform: translate(-50%, -50%); /* Centraliza o gradiente no cursor */
+  transition: top 0.15s ease-out, left 0.15s ease-out; /* Suaviza o movimento */
+  will-change: transform; /* Otimização de performance para a animação */
+}
+
+/* Estilo do card de login com efeito de vidro */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  backdrop-filter: blur(12px); /* Efeito de vidro fosco */
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fade-in 0.8s ease-out;
+}
+
+/* Efeito de "levantar" e brilhar ao passar o mouse */
+.login-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5), 0 0 20px var(--glow-color);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilização moderna para os campos de input */
+.login-card .form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  color: var(--text-color);
+  padding: 0.5rem 0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card .form-control:focus {
+  background: transparent;
+  color: var(--text-color);
+  box-shadow: 0 2px 0 0 var(--glow-color);
+  border-color: var(--glow-color);
+  outline: none;
+}
+
+/* Estilo para o botão de login */
+.login-card .btn-primary {
+  background: linear-gradient(45deg, #00aaff, #6200ff);
+  border: none;
+  padding: 0.75rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--glow-color);
+}
+
+/* Ajuste na cor do texto de ajuda */
+.login-card .text-muted {
+  color: var(--muted-text-color) !important;
+}

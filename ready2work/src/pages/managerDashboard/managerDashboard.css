@@ -1,0 +1,141 @@
+/* Animação de entrada com delay para os cards do dashboard.
+   A variável --card-index será definida no JSX. */
+.dashboard-card {
+    animation-delay: calc(var(--card-index) * 100ms);
+}
+
+.dashboard-card .card-title {
+    color: #ffffff; /* Alterado para branco puro para maior contraste */
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra sutil para legibilidade */
+}
+
+/* Estilo para destacar números ou estatísticas */
+.dashboard-card .stat-number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    display: block;
+    line-height: 1;
+}
+
+/* Estilo para itens de lista, como aprovações pendentes */
+.pending-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.pending-item:hover {
+    background-color: rgba(0, 170, 255, 0.15);
+    transform: translateX(5px);
+    cursor: pointer;
+}
+
+/* Container para os botões de ação */
+.pending-actions .btn {
+    --bs-btn-padding-y: .2rem; 
+    --bs-btn-padding-x: .6rem; 
+    --bs-btn-font-size: .75rem;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pending-actions .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.pending-actions .btn-success { --bs-btn-bg: #198754; }
+.pending-actions .btn-danger { --bs-btn-bg: #dc3545; }
+
+
+
+/* Estilo para os cards de vagas abertas */
+.job-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--glow-color);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.job-card:hover {
+    background-color: rgba(0, 170, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.job-card h5 {
+    margin-bottom: 0.25rem;
+    color: #fff;
+}
+
+/* Estilo para a lista de candidatos internos */
+.candidate-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.candidate-item:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
+.candidate-item .btn {
+    --bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;
+}
+
+/* Estilo para o gráfico de porcentagem (Donut Chart) */
+.percentage-chart {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* O gradiente cônico cria o efeito de preenchimento */
+    background: conic-gradient(
+        var(--glow-color) calc(var(--percentage) * 1%), 
+        rgba(255, 255, 255, 0.1) 0
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: fill-chart 0.8s ease-out;
+}
+
+/* Círculo interno para criar o efeito "donut" */
+.percentage-chart::before {
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    background: var(--card-bg);
+    border-radius: 50%;
+}
+
+/* Estilo para o texto dentro do gráfico */
+.percentage-chart .percentage-text {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+.percentage-chart p {
+    position: relative;
+    color: var(--text-color);
+    opacity: 0.75;
+}

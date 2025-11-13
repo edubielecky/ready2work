@@ -1,0 +1,70 @@
+/* Importa a fonte Poppins para um visual moderno */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Variáveis de cor para o tema escuro, agora disponíveis globalmente */
+:root {
+  --glow-color: rgba(0, 170, 255, 0.7);
+  --card-bg: rgba(25, 25, 40, 0.75);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-color: #f0f0f0;
+  --muted-text-color: #a0a0a0;
+  --dark-bg: #111;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+
+  /* Fundo com gradiente sutil para dar profundidade */
+  background-image: radial-gradient(circle at 1% 1%, hsla(240, 80%, 15%, 0.5) 0px, transparent 50%),
+                    radial-gradient(circle at 99% 99%, hsla(300, 80%, 20%, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Classe reutilizável para o efeito de vidro fosco */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: card-fade-in 0.5s ease-out forwards;
+  opacity: 0; /* Começa invisível para a animação funcionar */
+}
+
+/* Animação de entrada para os cards */
+@keyframes card-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Efeito de hover para os cards */
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px 0 rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--glow-color);
+}
+
+/* Estilo para ícones dentro dos cards */
+.glass-card .card-icon {
+  font-size: 2rem;
+  color: var(--glow-color);
+  text-shadow: 0 0 10px var(--glow-color);
+  margin-bottom: 1rem;
+}
