@@ -31,11 +31,11 @@ def salvar_colaborador(colaborador):
     # Transforma o objeto em um dicionário para salvar no JSON
     colaborador_dict = {
         "id": colaborador.id,
-        "name": colaborador.name,
+        "name": colaborador.nome,
         "email": colaborador.email,
-        "role": colaborador.role,
-        "department": colaborador.department,
-        "applications": colaborador.applications # Garante que as inscrições sejam salvas
+        "cargo_atual": colaborador.cargo_atual,
+        "setor": colaborador.setor,
+        #"applications": colaborador.applications # Garante que as inscrições sejam salvas
     }
     data.append(colaborador_dict)
 

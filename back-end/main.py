@@ -7,13 +7,13 @@ from models.gestor import Gestor
 
 # Criando um novo colaborador
 colab1 = Colaborador(
-    id=3, # Usando um ID diferente para não conflitar com o seed
-    name="João Silva",
+    id= 2, # Usando um ID diferente para não conflitar com o seed
+    nome="João Silva",
     email="joao@empresa.com",
-    role="Assistente Técnico",
-    department="Manutenção",
-    manager="Eduardo Bielecky",
-    joinDate="01/03/2021"
+    cargo_atual="Assistente Técnico",
+    setor="Manutenção",
+    gestor="Eduardo Bielecky",
+    tempo_empresa= "01/01/2025"
 )
 colab1.adicionar_habilidade({'name': 'Soldagem', 'level': 'Intermediário'})
 colab1.adicionar_soft_skill("Trabalho em equipe") # Soft skills podem ser mantidas para uso futuro
@@ -26,7 +26,7 @@ salvar_colaborador(colab1)
 colaboradores = listar_colaboradores()
 print("\n📋 Lista de colaboradores cadastrados:\n")
 for c in colaboradores:
-    print(f"🧑 {c['name']} | Cargo: {c['role']} | Setor: {c['department']} | Status: {c.get('status_vaga', 'N/A')}")
+    print(f"🧑 {c['name']} | Cargo: {c['cargo_atual']} | Setor: {c['setor']} | Status: {c.get('status_vaga', 'N/A')}")
 
 
 #---------------------------------------------------GESTOR---------------------------------------------------
