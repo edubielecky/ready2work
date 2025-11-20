@@ -36,20 +36,31 @@ const Header = ({ userRole }) => {
       ];
       break;
     default:
-      return null; // Ou um cabeçalho padrão para usuários não autenticados
+      navLinks = [
+        { to: '/about', text: 'Sobre' },
+        { to: '/contact', text: 'Contate' },
+        { to: '/login', text: 'Entrar' },
+      ]; // Ou um cabeçalho padrão para usuários não autenticados
   }
 
   return (
     <nav 
-      className="navbar container mt-3 px-2 navbar-expand-lg navbar-dark rounded-5" 
-      style={{ 
-        backgroundColor: 'rgba(15, 15, 25, 0.5)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid var(--border-color)'
+      className="navbar container mt-3 px-2 navbar-expand-lg navbar-dark rounded-5"
+        style={{ 
+          background: "var(--card-bg)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "15px",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+          color: "var(--text-color)",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          animation: "card-fade-in 0.5s ease-out forwards",
+          opacity: "0",
       }}
     >
       <div className="container-fluid">
-        <Link className="navbar-brand fw-bold" to="/">Ready2Work.</Link>
+        <Link className="navbar-brand fw-bold fs-5" to="/">Ready2Work.</Link>
         <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

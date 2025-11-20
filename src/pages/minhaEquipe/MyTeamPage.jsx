@@ -24,7 +24,7 @@ const MyTeamPage = () => {
   return (
     <>
       <div className="container mt-4">
-      <h1 className="mb-4 fw-bold">Minha Equipe</h1>
+      <h1 className="mb-4 fw-bold fs-2">Minha Equipe</h1>
 
       <div className="row g-4">
         {teamData.map((member, index) => (
@@ -34,7 +34,7 @@ const MyTeamPage = () => {
               <div className="team-member-avatar">
                 {member.name.charAt(0)}
               </div>
-              <h4>{member.name}</h4>
+              <h4 className='mb-2'>{member.name}</h4>
               <p className="text-light opacity-75">{member.role}</p>
               <button className="btn btn-outline-light" onClick={() => handleShowDetails(member)}>Ver Detalhes</button>
             </div>
@@ -49,15 +49,15 @@ const MyTeamPage = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content glass-card">
               <div className="modal-header border-0">
-                <h5 className="modal-title card-title" style={{borderBottom: 'none', marginBottom: 0}}>Detalhes do Colaborador</h5>
+                <h5 className="modal-title card-title fs-5" style={{borderBottom: 'none', marginBottom: 0}}>Detalhes do Colaborador</h5>
                 <button type="button" className="btn-close btn-close-white" onClick={handleCloseModal}></button>
               </div>
               <div className="modal-body text-center">
                 <div className="team-member-avatar mx-auto">
                   {selectedMember.name.charAt(0)}
                 </div>
-                <h3 className='text-light mt-3'>{selectedMember.name}</h3>
-                <p className="text-light opacity-75">{selectedMember.role}</p>
+                <h3 className='text-light mt-3 fs-4 mb-2'>{selectedMember.name}</h3>
+                <p className="text-light opacity-75 mb-2">{selectedMember.role}</p>
                 <a href={`mailto:${selectedMember.email}`} className="text-light opacity-50 d-block mb-4">{selectedMember.email}</a>
 
                 <div className="row align-items-center">

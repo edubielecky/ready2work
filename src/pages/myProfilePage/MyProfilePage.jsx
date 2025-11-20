@@ -43,7 +43,7 @@ const MyProfilePage = () => {
         <div className="glass-card profile-header">
           <button className="btn btn-sm btn-outline-light btn-edit" onClick={handleOpenEditModal}>Editar Perfil</button>
           <div className="profile-avatar">{profile.name.charAt(0)}</div>
-          <h2>{profile.name}</h2>
+          <h2 className='fs-3'>{profile.name}</h2>
           <p className="text-light opacity-75">{profile.role}</p>
         </div>
 

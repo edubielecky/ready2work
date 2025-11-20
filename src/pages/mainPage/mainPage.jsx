@@ -21,7 +21,7 @@ const MainPage = () => {
   return (
     <main className="container mt-4">
       <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold">Bem-vindo, Gestor</h1>
+        <h1 className="display-4 fw-bold mb-2">Bem-vindo, Gestor</h1>
         <p className="fs-5 text-light opacity-75">Acesse rapidamente as principais áreas do seu painel.</p>
       </div>
 
@@ -32,24 +32,24 @@ const MainPage = () => {
             {/* Card para o Dashboard */}
             <Link to="/dashboard" className="glass-card summary-card" style={{'--card-index': 1}} {...glowHandlers}>
               <span className="card-icon">📊</span>
-              <h3>Dashboard</h3>
-              <p className="text-light opacity-75">Visão geral da equipe, aprovações e vagas em aberto.</p>
+              <h3 className='fs-4'>Dashboard</h3>
+              <p className="text-light opacity-75 mb-2">Visão geral da equipe, aprovações e vagas em aberto.</p>
               <span className="card-link">Acessar Dashboard &rarr;</span>
             </Link>
 
             {/* Card para Minha Equipe */}
             <Link to="/team" className="glass-card summary-card" style={{'--card-index': 2}} {...glowHandlers}>
               <span className="card-icon">👥</span>
-              <h3>Minha Equipe</h3>
-              <p className="text-light opacity-75">Gerencie os membros da sua equipe, performance e competências.</p>
+              <h3 className='fs-4'>Minha Equipe</h3>
+              <p className="text-light opacity-75 mb-2">Gerencie os membros da sua equipe, performance e competências.</p>
               <span className="card-link">Gerenciar Equipe &rarr;</span>
             </Link>
 
             {/* Card para Meu Perfil */}
             <Link to="/profile" className="glass-card summary-card" style={{'--card-index': 3}} {...glowHandlers}>
               <span className="card-icon">👤</span>
-              <h3>Meu Perfil</h3>
-              <p className="text-light opacity-75">Edite suas informações pessoais e configurações da conta.</p>
+              <h3 className='fs-4'>Meu Perfil</h3>
+              <p className="text-light opacity-75 mb-2">Edite suas informações pessoais e configurações da conta.</p>
               <span className="card-link">Ver Perfil &rarr;</span>
             </Link>
           </div>
@@ -60,7 +60,7 @@ const MainPage = () => {
           <div className="d-flex flex-column gap-4">
             {/* Widget de Performance */}
             <div className="glass-card widget-card p-4" style={{'--card-index': 4}}>
-              <h4>Resumo de Performance</h4>
+              <h4 className='fs-4'>Resumo de Performance</h4>
               <div className="bar-chart-container">
                 <div className="bar-wrapper">
                   <div className="bar" style={{ height: '12%', '--delay-index': 1 }}></div>
@@ -87,7 +87,7 @@ const MainPage = () => {
 
             {/* Widget de Projetos */}
             <div className="glass-card widget-card p-4" style={{'--card-index': 5}}>
-              <h4>Status dos Projetos</h4>
+              <h4 className='fs-4'>Status dos Projetos</h4>
               <div className="donut-chart-container" style={{'--p1': 70, '--p2': 70 + 20, '--p3': 70 + 20 + 10}}>
                 <div className="center-text">
                   <span>10</span>

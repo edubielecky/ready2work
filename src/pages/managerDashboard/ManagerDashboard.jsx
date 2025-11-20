@@ -22,22 +22,22 @@ const ManagerDashboard = () => {
     <>
       {/* O container principal do dashboard */}
       <div className="container mt-4">
-      <h1 className="mb-4 fw-bold">Dashboard do Gestor</h1>
+      <h1 className="mb-4 fw-bold fs-2">Dashboard do Gestor</h1>
 
       <div className="row g-4" >
         {/* Card de Visão Geral da Equipe */}
         <div className="col-md-6">
           {/* Adicionamos a classe 'dashboard-card' e a variável de estilo para o delay */}
           <div className="glass-card dashboard-card p-4 h-100" style={{'--card-index': 1}}>
-            <h3 className="card-title">Visão Geral da Equipe</h3>
+            <h3 className="card-title fs-5">Visão Geral da Equipe</h3>
             <div className="row">
               <div className="col">
                 <span className="stat-number">8</span>
-                <p className="text-light opacity-75 mb-0">Membros ativos</p>
+                <p className="text-light opacity-75 mb-0 mt-2">Membros ativos</p>
               </div>
               <div className="col">
                 <span className="stat-number">3</span>
-                <p className="text-light opacity-75 mb-0">Projetos em andamento</p>
+                <p className="text-light opacity-75 mb-0 mt-2">Projetos em andamento</p>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ const ManagerDashboard = () => {
         {/* Card de Aprovações Pendentes */}
         <div className="col-md-6">
           <div className="glass-card dashboard-card p-4 h-100" style={{'--card-index': 2}}>
-            <h3 className="card-title">Aprovações Pendentes</h3>
+            <h3 className="card-title fs-5">Aprovações Pendentes</h3>
             {pendingApprovalsData.map(candidate => (
               <div key={candidate.id} className="pending-item" onClick={() => handleShowModal(candidate)}>
                 <div>
@@ -66,7 +66,7 @@ const ManagerDashboard = () => {
       <div className="row mt-4">
         <div className="col-12">
           <div className="glass-card dashboard-card p-4" style={{'--card-index': 3}}>
-            <h3 className="card-title">Minhas Vagas (Contratação)</h3>
+            <h3 className="card-title fs-5">Minhas Vagas (Contratação)</h3>
             <div className="row">
               {/* Coluna de Vagas Abertas */}
               <div className="col-lg-6">
@@ -104,12 +104,12 @@ const ManagerDashboard = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content glass-card">
               <div className="modal-header border-0">
-                <h5 className="modal-title card-title" style={{borderBottom: 'none', marginBottom: 0}}>Análise de Candidato</h5>
+                <h5 className="modal-title card-title fs-5" style={{borderBottom: 'none', marginBottom: 0}}>Análise de Candidato</h5>
                 <button type="button" className="btn-close btn-close-white" onClick={handleCloseModal}></button>
               </div>
               <div className="modal-body text-center">
-                <h3 className='text-light'>{selectedCandidate.name}</h3>
-                <p className="text-light opacity-50 mb-1">Cargo Atual: {selectedCandidate.currentRole}</p>
+                <h3 className='text-light mb-2 fs-3'>{selectedCandidate.name}</h3>
+                <p className="text-light opacity-50 mb-2">Cargo Atual: {selectedCandidate.currentRole}</p>
                 <p className="text-light opacity-75">Candidatura para: <span className='fw-bold'>{selectedCandidate.appliedRole}</span></p>
 
                 <div className="percentage-chart mx-auto my-4" style={{'--percentage': selectedCandidate.fitness}}>

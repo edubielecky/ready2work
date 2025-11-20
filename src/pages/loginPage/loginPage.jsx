@@ -35,7 +35,7 @@ const LoginPage = ({ onLogin }) => {
   return (
     <div className="login-container" ref={containerRef}>
       <div className="login-card">
-          <h2 className="card-title text-center mb-4">Login - Ready2Work</h2>
+          <h2 className="card-title text-center mb-4 fs-3 fw-bold">Login - Ready2Work</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Usuário</label>
@@ -51,9 +51,9 @@ const LoginPage = ({ onLogin }) => {
           <div className="mt-4 text-center text-muted">
             <p className="mb-1">Use um dos logins fictícios:</p>
             <small>
-              <strong>Colaborador:</strong> user: colaborador, pass: 123<br />
-              <strong>Gestor:</strong> user: gestor, pass: 123<br />
-              <strong>Diretor:</strong> user: diretor, pass: 123
+              <p className='mb-1'><strong>Colaborador:</strong> user: colaborador, pass: 123</p>
+              <p className='mb-1'><strong>Gestor:</strong> user: gestor, pass: 123</p>
+              <p className='mb-1'><strong>Diretor:</strong> user: diretor, pass: 123</p>
             </small>
           </div>
       </div>

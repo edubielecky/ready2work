@@ -23,8 +23,14 @@ const CollaboratorMainPage = () => {
   return (
     <main className="container mt-4">
       <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold">Olá, Colaborador</h1>
-        <p className="fs-5 text-light opacity-75">Seu espaço para produtividade e desenvolvimento.</p>
+        <h1 className="display-4 fw-bold" style={{
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          animation: "card-fade-in 0.5s ease-out forwards",
+        }}>Olá, Colaborador</h1>
+        <p className="fs-5 text-light opacity-75" style={{
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          animation: "card-fade-in 0.5s ease-out forwards",
+        }}>Seu espaço para produtividade e desenvolvimento.</p>
       </div>
 
       <div
@@ -45,7 +51,7 @@ const CollaboratorMainPage = () => {
     >
       <span className="card-icon">✅</span>
       <h3>Minhas Inscrições</h3>
-      <p className="text-light opacity-75">Veja suas inscrições em vagas internas da empresa.</p>
+      <p className="text-light opacity-75 mb-1">Veja suas inscrições em vagas internas da empresa.</p>
       <span className="card-link">Ver Inscrições &rarr;</span>
     </Link>
 
@@ -58,7 +64,7 @@ const CollaboratorMainPage = () => {
     >
       <span className="card-icon">🚀</span>
       <h3>Meu Desempenho</h3>
-      <p className="text-light opacity-75">Acompanhe suas metas e feedbacks recebidos.</p>
+      <p className="text-light opacity-75 mb-1">Acompanhe suas metas e feedbacks recebidos.</p>
       <span className="card-link">Ver Desempenho &rarr;</span>
     </Link>
 
@@ -75,7 +81,7 @@ const CollaboratorMainPage = () => {
     >
       <span className="card-icon">👤</span>
       <h3>Meu Perfil</h3>
-      <p className="text-light opacity-75">Mantenha suas informações e competências atualizadas.</p>
+      <p className="text-light opacity-75 mb-1">Mantenha suas informações e competências atualizadas.</p>
       <span className="card-link">Ver Perfil &rarr;</span>
     </Link>
   </div>
