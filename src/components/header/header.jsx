@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import "./header.css";
 
 const Header = ({ userRole }) => {
   const renderCollaboratorHeader = () => (
     <header style={{ backgroundColor: '#f0f0f0', padding: '10px', borderBottom: '1px solid #ccc' }}></header>);
-  let welcomeMessage = '';
+  // let welcomeMessage = '';
   let navLinks = [];
 
   // Define as boas-vindas e os links de navegação com base no perfil do usuário
   switch (userRole) {
     case 'collaborator':
-      welcomeMessage = 'Bem-vindo, Colaborador!';
+      // welcomeMessage = 'Bem-vindo, Colaborador!';
       navLinks = [
         { to: '/applications', text: 'Minhas Inscrições' },
         { to: '/performance', text: 'Meu Desempenho' },
@@ -18,7 +19,7 @@ const Header = ({ userRole }) => {
       ];
       break;
     case 'manager':
-      welcomeMessage = 'Bem-vindo, Gestor!';
+      // welcomeMessage = 'Bem-vindo, Gestor!';
       navLinks = [
         { to: '/dashboard', text: 'Dashboard' },
         { to: '/team', text: 'Minha Equipe' },
@@ -26,7 +27,7 @@ const Header = ({ userRole }) => {
       ];
       break;
     case 'director':
-      welcomeMessage = 'Bem-vindo, Diretor!';
+      // welcomeMessage = 'Bem-vindo, Diretor!';
       navLinks = [
         { to: '/overview', text: 'Visão Geral' },
         { to: '/analytics', text: 'Análises' },
@@ -40,16 +41,16 @@ const Header = ({ userRole }) => {
 
   return (
     <nav 
-      className="navbar navbar-expand-lg navbar-dark" 
+      className="navbar container mt-3 px-2 navbar-expand-lg navbar-dark rounded-5" 
       style={{ 
-        backgroundColor: 'rgba(15, 15, 25, 0.5)', 
+        backgroundColor: 'rgba(15, 15, 25, 0.5)',
         backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid var(--border-color)'
+        border: '1px solid var(--border-color)'
       }}
     >
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">{welcomeMessage}</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <Link className="navbar-brand fw-bold" to="/">Ready2Work.</Link>
+        <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
