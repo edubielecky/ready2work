@@ -1,49 +1,34 @@
-#database
-from database.db_mock import salvar_colaborador, listar_colaboradores, salvar_gestor, listar_gestores
-#colaborador
-from models.colaborador import Colaborador
-#gestor
-from models.gestor import Gestor
+from flask_cors import CORS
+# 1. Importa a instância do Flask e as rotas definidas no app.py
+from app import app
+# Importa o seed.py. Se o seed.py não estiver na mesma pasta que main.py,
+# ajuste esta linha para "from .seed import seed_database" ou "from backend.seed import seed_database"
+# Vamos manter "from seed import seed_database" por enquanto.
+from seed import seed_database 
 
-# Criando um novo colaborador
-colab1 = Colaborador(
-    id=3, # Usando um ID diferente para não conflitar com o seed
-    name="João Silva",
-    email="joao@empresa.com",
-    role="Assistente Técnico",
-    department="Manutenção",
-    manager="Eduardo Bielecky",
-    joinDate="01/03/2021"
-)
-colab1.adicionar_habilidade({'name': 'Soldagem', 'level': 'Intermediário'})
-colab1.adicionar_soft_skill("Trabalho em equipe") # Soft skills podem ser mantidas para uso futuro
-colab1.atualizar_status_vaga("Em análise") # Status de vaga interna
+# IMPORTANTE: Em um ambiente de produção, use uma chave secreta complexa
+app.secret_key = 'super_secret_key' 
 
-# Salvando o colaborador no mock
-salvar_colaborador(colab1)
+# Configura o CORS para permitir conexões do frontend React (porta 5173)
+# O 'supports_credentials=True' é OBRIGATÓRIO para permitir sessões (login) e cookies
+CORS(app, supports_credentials=True)
 
-# Listando todos os colaboradores
-colaboradores = listar_colaboradores()
-print("\n📋 Lista de colaboradores cadastrados:\n")
-for c in colaboradores:
-    print(f"🧑 {c['name']} | Cargo: {c['role']} | Setor: {c['department']} | Status: {c.get('status_vaga', 'N/A')}")
+# ----------------------------------------------------
+# 2. POPULAR O BANCO DE DADOS
+# O seed deve ser chamado APENAS uma vez na inicialização
+# ----------------------------------------------------
+try:
+    print("-> Iniciando a popularização do banco de dados mock (seed.py)...")
+    seed_database()
+    print("-> Banco de dados mock populado com sucesso.")
+except Exception as e:
+    # Captura o erro (provavelmente o AttributeError) e informa o usuário
+    print(f"-> ERRO CRÍTICO NO SEED: Falha ao popular o banco de dados. {e}")
+    print("   -> Os dados de candidatura podem estar faltando ou incorretos.")
+    print("   -> Verifique o erro no 'seed.py' ou 'colaborador.py'.")
 
-
-#---------------------------------------------------GESTOR---------------------------------------------------
-
-# Criando um gestor
-gestor1 = Gestor(
-    id=1,
-    nome="Carlos Silva", # 'nome' está correto para Gestor conforme o modelo
-    email="carlos.silva@empresa.com",
-    setor_responsavel="Gerente Comercial",
-    permissao="Administrador"
-)
-
-# Salvando no banco simulado
-salvar_gestor(gestor1)
-
-# Listando gestores cadastrados
-print("\n📋 Gestores cadastrados:\n")
-for g in listar_gestores():
-    print(f"- {g['nome']} ({g['setor_responsavel']})")
+if __name__ == '__main__':
+    # Roda o servidor em modo de debug na porta 5000
+    print("\n🚀 Servidor Flask Ready2Work iniciado em http://127.0.0.1:5000")
+    print("   -> Frontend deve se conectar a este endereço.")
+    app.run(debug=True, port=5000)

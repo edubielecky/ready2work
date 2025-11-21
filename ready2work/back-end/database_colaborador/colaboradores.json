@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Ana Silva",
+        "email": "ana.silva@ready2work.com",
+        "role": "Desenvolvedora Front-end Pleno",
+        "department": "Tecnologia",
+        "manager": "Gestor Exemplo",
+        "joinDate": "10/01/2022",
+        "applications": [
+            {
+                "id": 1,
+                "jobTitle": "Desenvolvedor Back-end S\u00eanior (Vaga Interna)",
+                "applicationDate": "28/07/2024",
+                "status": "Em An\u00e1lise",
+                "statusClass": "analise"
+            },
+            {
+                "id": 2,
+                "jobTitle": "Engenheiro de Dados (Vaga Interna)",
+                "applicationDate": "22/07/2024",
+                "status": "Entrevista Agendada",
+                "statusClass": "aprovado"
+            },
+            {
+                "id": 3,
+                "jobTitle": "Product Owner (Vaga Interna)",
+                "applicationDate": "15/07/2024",
+                "status": "Rejeitado",
+                "statusClass": "rejeitado"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Bruno Costa",
+        "email": "bruno.costa@ready2work.com",
+        "role": "Desenvolvedor Back-end S\u00eanior",
+        "department": "Tecnologia",
+        "manager": "Gestor Exemplo",
+        "joinDate": "15/03/2020",
+        "applications": []
+    }
+]

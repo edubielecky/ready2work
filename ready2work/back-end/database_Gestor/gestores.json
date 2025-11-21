@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "nome": "Carlos Pereira",
+        "email": "carlos.pereira@ready2work.com",
+        "setor_responsavel": "Tecnologia",
+        "vagas_abertas": [],
+        "colaboradores_sob_gestao": [],
+        "permissao": "manager"
+    }
+]
