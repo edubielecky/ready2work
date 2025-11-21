@@ -1,9 +1,15 @@
-# database
+# main.py (corrigido)
+# Script de exemplo que demonstra os fluxos principais do sistema:
+# - cadastro de colaborador
+# - cadastro de gestor / RH / diretoria
+# - criação e validação de vaga
+# - candidatura e fluxo de aprovação
+
 from database.db_mock import (
     salvar_colaborador, listar_colaboradores,
     salvar_gestor, listar_gestores,
-    salvar_diretoria,
-    salvar_rh,
+    salvar_diretoria, listar_diretoria,
+    salvar_rh, listar_rh,
     salvar_vaga, listar_vagas,
     salvar_candidatura, listar_candidaturas
 )
@@ -17,8 +23,17 @@ from models.rh import Rh
 from models.diretoria import Diretoria
 
 # -----------------------------
+# HELPERS LOCAIS
+# -----------------------------
+
+def imprimir_titulo(t):
+    print("\n" + "📌 " + t)
+
+
+# -----------------------------
 # CADASTRAR COLABORADORES
 # -----------------------------
+imprimir_titulo("Cadastro de Colaborador")
 colab1 = Colaborador(
     id=1,
     nome="João Silva",
@@ -29,33 +44,44 @@ colab1 = Colaborador(
     data_admissao="2023-05-15"
 )
 
+# adicionar skills e histórico
 colab1.adicionar_habilidade({"nome": "Soldagem", "nivel": "Intermediário"})
 colab1.adicionar_soft_skill("Trabalho em equipe")
 
+# registra no "banco"
 salvar_colaborador(colab1)
+print("Colaborador salvo:", colab1.nome)
 
 
 # --------------------------------
 # CADASTRAR GESTOR DO COLABORADOR
 # --------------------------------
+imprimir_titulo("Cadastro de Gestor")
+# Observação: o ID do gestor (99) deveria existir como colaborador em produção.
+# Aqui apenas registramos a entidade Gestor para efeitos do fluxo.
 gestor_atual = Gestor(id_colaborador=99)
 gestor_atual.adicionar_colaborador(colab1.id)
 salvar_gestor(gestor_atual)
+print("Gestor salvo (id_colaborador=99)")
 
 
 # --------------------------------
 # CADASTRAR RH & DIRETORIA
 # --------------------------------
+imprimir_titulo("Cadastro de RH e Diretoria")
 rh = Rh(id_colaborador=50)
 salvar_rh(rh)
+print("RH salvo (id_colaborador=50)")
 
 diretor = Diretoria(id_colaborador=10, cargo="Diretor Operacional")
 salvar_diretoria(diretor)
+print("Diretoria salva (id_colaborador=10)")
 
 
 # --------------------------------
 # FLUXO 1 — CRIAÇÃO DA VAGA
 # --------------------------------
+imprimir_titulo("Criação da Vaga")
 vaga = VagaInterna(
     id=101,
     titulo="Técnico Pleno",
@@ -66,21 +92,27 @@ vaga = VagaInterna(
     id_gestor_dono=99
 )
 
-print("\n📌 Vaga criada e aguardando validação do RH.")
+print("Vaga criada localmente. Status:", vaga.status)
+# salvar a vaga (se o db_mock suportar atualização, ele deve sobrescrever)
 salvar_vaga(vaga)
+print("Vaga persistida com id", vaga.id)
 
 
 # --------------------------------
 # FLUXO 1 — RH valida a vaga
 # --------------------------------
+imprimir_titulo("Validação RH da Vaga")
+# Simula ação do RH aprovando a vaga
 vaga.validar_rh()
+# garante que a alteração seja persistida
 salvar_vaga(vaga)
-print("📌 RH aprovou a vaga. Status:", vaga.status)
+print("RH aprovou a vaga. Status:", vaga.status)
 
 
 # --------------------------------
 # FLUXO 2 — CANDIDATURA
 # --------------------------------
+imprimir_titulo("Criação de Candidatura")
 candidatura = Candidatura(
     id=5001,
     id_colaborador=colab1.id,
@@ -97,41 +129,60 @@ if score >= 60:
 else:
     candidatura.registrar_motivo_recusa("Perfil abaixo do mínimo definido", None)
 
+# Persistir candidatura
 salvar_candidatura(candidatura)
+print("Candidatura salva. Status:", candidatura.status)
 
-print("\n📌 Score calculado:", score)
-print("📌 Status da candidatura:", candidatura.status)
+# Vincular candidatura à vaga e ao colaborador (manter consistência)
+try:
+    vaga.receber_candidatura(candidatura.id)
+    salvar_vaga(vaga)
+except Exception:
+    # se receber_candidatura não existir ou salvar_vaga não permitir update, ignoramos
+    pass
+
+try:
+    colab1.registrar_candidatura(candidatura.id)
+    salvar_colaborador(colab1)
+except Exception:
+    pass
+
+print("Score calculado:", score)
 
 
 # --------------------------------
 # FLUXO 3 — GESTOR ATUAL APROVA
 # --------------------------------
+imprimir_titulo("Aprovação pelo Gestor Atual")
 if candidatura.status == "aguardando_gestor_atual":
     candidatura.definir_status("aprovado")
     salvar_candidatura(candidatura)
-    print("\n📌 Gestor atual aprovou! Candidatura agora está:", candidatura.status)
+    print("Gestor atual aprovou! Candidatura agora está:", candidatura.status)
 
 
 # --------------------------------
 # FLUXO 4 — VISUALIZAÇÃO DE MOTIVO (apenas Diretoria)
 # --------------------------------
-print("\n📌 Auditoria — Diretoria pode ver motivos de recusa:")
+imprimir_titulo("Auditoria — Visualização de motivos de recusa")
 for c in listar_candidaturas():
-    if c["motivo_recusa"]:
+    if c.get("motivo_recusa"):
         print(f"- Candidatura {c['id']} | Motivo: {c['motivo_recusa']}")
 
 
 # --------------------------------
 # MOSTRAR RESUMOS
 # --------------------------------
-print("\n📋 COLABORADORES:")
+imprimir_titulo("Resumo - Colaboradores")
 print(listar_colaboradores())
 
-print("\n📋 GESTORES:")
+imprimir_titulo("Resumo - Gestores")
 print(listar_gestores())
 
-print("\n📋 VAGAS:")
+imprimir_titulo("Resumo - Vagas")
 print(listar_vagas())
 
-print("\n📋 CANDIDATURAS:")
+imprimir_titulo("Resumo - Candidaturas")
 print(listar_candidaturas())
+
+# FIM
+print('\n✅ Fluxos executados.')

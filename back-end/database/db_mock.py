@@ -1,11 +1,19 @@
+# db_mock.py (refatorado, padronizado e corrigido)
+
 import json
 import os
+from typing import Any, List
 
 # ---------------------------------------
-# FUNÇÃO GENÉRICA PARA LEITURA E ESCRITA
+# FUNÇÕES GENÉRICAS DE LEITURA E ESCRITA
 # ---------------------------------------
 
-def carregar_json(caminho):
+
+def carregar_json(caminho: str) -> List[Any]:
+    """Carrega dados JSON de um arquivo.
+
+    Retorna uma lista vazia caso o arquivo não exista ou esteja inválido.
+    """
     if not os.path.exists(caminho):
         return []
 
@@ -17,198 +25,166 @@ def carregar_json(caminho):
         return []
 
 
-def salvar_json(caminho, dados):
+def salvar_json(caminho: str, dados: Any) -> None:
+    """Salva dados em um arquivo JSON, criando diretório se necessário."""
+    os.makedirs(os.path.dirname(caminho), exist_ok=True)
     with open(caminho, "w", encoding="utf-8") as f:
         json.dump(dados, f, indent=4, ensure_ascii=False)
 
 
-# -----------------------------------------------------------------
+# ---------------------------------------
+# HELPERS PARA PADRONIZAÇÃO
+# ---------------------------------------
+
+def evitar_duplicidade(lista: list, chave: str, valor: Any) -> bool:
+    """Retorna True caso a chave já exista na lista de registros."""
+    return any(item.get(chave) == valor for item in lista)
+
+
+# ---------------------------------------
 # COLABORADORES
-# -----------------------------------------------------------------
+# ---------------------------------------
 
 COLAB_DIR = "database_colaborador"
 COLAB_PATH = os.path.join(COLAB_DIR, "colaboradores.json")
-os.makedirs(COLAB_DIR, exist_ok=True)
+
 
 def salvar_colaborador(colaborador):
     data = carregar_json(COLAB_PATH)
 
-    # Impede duplicação por ID ou Email
-    for c in data:
-        if c["id"] == colaborador.id or c["email"] == colaborador.email:
-            print(f"⚠️ O colaborador com ID {colaborador.id} ou email {colaborador.email} já está cadastrado.")
-            return
+    # Evita duplicações por ID ou Email
+    if evitar_duplicidade(data, "id", colaborador.id) or evitar_duplicidade(data, "email", colaborador.email):
+        print(f"⚠️ O colaborador com ID {colaborador.id} ou email {colaborador.email} já está cadastrado.")
+        return
 
-    colaborador_dict = {
-        "id": colaborador.id,
-        "nome": colaborador.nome,
-        "email": colaborador.email,
-        "cargo": colaborador.cargo,
-        "setor": colaborador.setor,
-        "id_gestor_atual": colaborador.id_gestor_atual,
-        "data_admissao": colaborador.data_admissao,
-        "habilidades_tecnicas": colaborador.habilidades_tecnicas,
-        "soft_skills": colaborador.soft_skills,
-        "trilhas_aprendizado": colaborador.trilhas_aprendizado,
-        "treinamentos_e_certificados": colaborador.treinamentos_e_certificados,
-        "historico_performance": colaborador.historico_performance,
-        "historico_cargos": colaborador.historico_cargos,
-        "candidaturas": colaborador.candidaturas,
-        "roles": colaborador.roles
-    }
-
+    colaborador_dict = colaborador.__dict__.copy()
     data.append(colaborador_dict)
     salvar_json(COLAB_PATH, data)
+
 
 def listar_colaboradores():
     return carregar_json(COLAB_PATH)
 
 
-# -----------------------------------------------------------------
+# ---------------------------------------
 # GESTORES
-# -----------------------------------------------------------------
+# ---------------------------------------
 
 GESTOR_DIR = "database_gestor"
 GESTOR_PATH = os.path.join(GESTOR_DIR, "gestores.json")
-os.makedirs(GESTOR_DIR, exist_ok=True)
+
 
 def salvar_gestor(gestor):
     data = carregar_json(GESTOR_PATH)
 
-    for g in data:
-        if g["id_colaborador"] == gestor.id_colaborador:
-            print("⚠️ Esse gestor já está registrado!")
-            return
+    if evitar_duplicidade(data, "id_colaborador", gestor.id_colaborador):
+        print("⚠️ Esse gestor já está registrado!")
+        return
 
-    data.append({
-        "id_colaborador": gestor.id_colaborador,
-        "permissao": gestor.permissao,
-        "equipes": gestor.equipes,
-        "vagas_abertas": gestor.vagas_abertas
-    })
-
+    data.append(gestor.__dict__.copy())
     salvar_json(GESTOR_PATH, data)
+
 
 def listar_gestores():
     return carregar_json(GESTOR_PATH)
 
 
-# -----------------------------------------------------------------
-# RH (opcional — só se quiser salvar)
-# -----------------------------------------------------------------
+# ---------------------------------------
+# RH
+# ---------------------------------------
 
 RH_DIR = "database_rh"
 RH_PATH = os.path.join(RH_DIR, "rh.json")
-os.makedirs(RH_DIR, exist_ok=True)
+
 
 def salvar_rh(rh):
     data = carregar_json(RH_PATH)
 
-    for item in data:
-        if item["id_colaborador"] == rh.id_colaborador:
-            print("⚠️ RH já registrado!")
-            return
+    if evitar_duplicidade(data, "id_colaborador", rh.id_colaborador):
+        print("⚠️ RH já registrado!")
+        return
 
-    data.append({
-        "id_colaborador": rh.id_colaborador,
-        "permissao": rh.permissao,
-        "colaboradores": rh.colaboradores,
-        "vagas_abertas": rh.vagas_abertas,
-        "vagas_fechadas": rh.vagas_fechadas
-    })
-
+    data.append(rh.__dict__.copy())
     salvar_json(RH_PATH, data)
 
+def listar_rh():
+    return carregar_json(DIR_PATH)
 
-# -----------------------------------------------------------------
+
+# ---------------------------------------
 # DIRETORIA
-# -----------------------------------------------------------------
+# ---------------------------------------
 
 DIR_DIR = "database_diretoria"
 DIR_PATH = os.path.join(DIR_DIR, "diretoria.json")
-os.makedirs(DIR_DIR, exist_ok=True)
+
 
 def salvar_diretoria(diretoria):
     data = carregar_json(DIR_PATH)
 
-    for d in data:
-        if d["id_colaborador"] == diretoria.id_colaborador:
-            print("⚠️ Diretor já registrado!")
-            return
+    if evitar_duplicidade(data, "id_colaborador", diretoria.id_colaborador):
+        print("⚠️ Diretor já registrado!")
+        return
 
-    data.append({
-        "id_colaborador": diretoria.id_colaborador,
-        "cargo": diretoria.cargo,
-        "gestores_responsaveis": diretoria.gestores_responsaveis,
-        "motivos_recusa_visiveis": diretoria.motivos_recusa_visiveis
-    })
-
+    data.append(diretoria.__dict__.copy())
     salvar_json(DIR_PATH, data)
 
 
-# -----------------------------------------------------------------
+def listar_diretoria():
+    return carregar_json(DIR_PATH)
+
+
+# ---------------------------------------
 # VAGAS INTERNAS
-# -----------------------------------------------------------------
+# ---------------------------------------
 
 VAGA_DIR = "database_vagas"
 VAGA_PATH = os.path.join(VAGA_DIR, "vagas.json")
-os.makedirs(VAGA_DIR, exist_ok=True)
+
 
 def salvar_vaga(vaga):
     data = carregar_json(VAGA_PATH)
 
-    for v in data:
-        if v["id"] == vaga.id:
-            print("⚠️ Vaga já cadastrada!")
-            return
+    if evitar_duplicidade(data, "id", vaga.id):
+        print("⚠️ Vaga já cadastrada!")
+        return
 
-    data.append({
-        "id": vaga.id,
-        "titulo": vaga.titulo,
-        "descricao": vaga.descricao,
-        "requisitos_tecnicos": vaga.requisitos_tecnicos,
-        "requisitos_soft": vaga.requisitos_soft,
-        "setor": vaga.setor,
-        "id_gestor_dono": vaga.id_gestor_dono,
-        "status": vaga.status,
-        "data_criacao": vaga.data_criacao.isoformat(),
-        "candidatos": vaga.candidatos
-    })
+    vaga_dict = vaga.__dict__.copy()
 
+    # Converte datetime para string
+    if hasattr(vaga, "data_criacao"):
+        vaga_dict["data_criacao"] = vaga.data_criacao.isoformat()
+
+    data.append(vaga_dict)
     salvar_json(VAGA_PATH, data)
+
 
 def listar_vagas():
     return carregar_json(VAGA_PATH)
 
-# -----------------------------------------------------------------
+
+# ---------------------------------------
 # CANDIDATURAS
-# -----------------------------------------------------------------
+# ---------------------------------------
 
 CAND_DIR = "database_candidaturas"
 CAND_PATH = os.path.join(CAND_DIR, "candidaturas.json")
-os.makedirs(CAND_DIR, exist_ok=True)
 
 
 def salvar_candidatura(c):
     data = carregar_json(CAND_PATH)
 
-    for item in data:
-        if item["id"] == c.id:
-            print("⚠️ Candidatura já existe")
-            return
+    if evitar_duplicidade(data, "id", c.id):
+        print("⚠️ Candidatura já existe")
+        return
 
-    data.append({
-        "id": c.id,
-        "id_colaborador": c.id_colaborador,
-        "id_vaga": c.id_vaga,
-        "status": c.status,
-        "score": c.score,
-        "motivo_recusa": c.motivo_recusa,
-        "id_gestor_atual": c.id_gestor_atual,
-        "id_gestor_avaliador": c.id_gestor_avaliador,
-        "data": c.data.isoformat()
-    })
+    cand_dict = c.__dict__.copy()
 
+    # Converte datetime para string
+    if hasattr(c, "data"):
+        cand_dict["data"] = c.data.isoformat()
+
+    data.append(cand_dict)
     salvar_json(CAND_PATH, data)
 
 

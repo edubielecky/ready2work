@@ -1,94 +1,109 @@
+# seed.py (corrigido e padronizado)
+
 from database import db_mock
 from models.colaborador import Colaborador
 from models.gestor import Gestor
-# Nota: Você precisará importar a classe Application/Candidatura aqui se ela existir,
-# mas como ela não existe, usamos dicionários no seed.py.
+from datetime import date
+
 
 def seed_database():
     """
-    Popula o banco de dados com dados iniciais.
+    Popula o banco de dados com dados iniciais seguindo o padrão atual do sistema.
     """
     print("🌱 Iniciando a semeadura do banco de dados...")
 
-    # Certifique-se de que o banco está limpo para evitar duplicação de IDs
-    db_mock.limpar_db() 
+    # -----------------------------------------------------------
+    # COLABORADOR 1
+    # -----------------------------------------------------------
 
-    # --- Colaborador 1: Ana Silva ---
-    print("\n--- Colaborador 1: Ana Silva ---")
-    colaborador_ana = Colaborador(
-        id=1, 
-        nome='Ana Silva', 
-        email='colaborador@ready2work.com', # Email de login
-        cargo_atual='Desenvolvedora Front-end Pleno',
-        setor='Tecnologia',
-        gestor='Gestor Exemplo',
-        tempo_empresa='10/01/2022'
-    )
-    
-    # Adicionando habilidades
-    colaborador_ana.adicionar_habilidade({'name': 'React', 'level': 'Avancado'})
-    colaborador_ana.adicionar_habilidade({'name': 'JavaScript', 'level': 'Avancado'})
-    
-    colaborador_ana.historico_carreira = [ 
-        {'role': 'Desenvolvedora Front-end Pleno', 'period': 'Jan/2023 - Atual'},
-        {'role': 'Desenvolvedora Front-end Júnior', 'period': 'Jan/2022 - Dez/2022'},
-    ]
-    colaborador_ana.treinamento_e_certificado = ['Curso Avançado de React Hooks', 'Workshop de Design Systems']
-
-    # --- Candidaturas da Ana ---
-    candidaturas_ana = [
-        # O dicionário está formatado para ser lido pelo db_mock e, futuramente, pelo frontend
-        {'id': 1, 'colaboradorId': 1, 'tituloVaga': 'Desenvolvedor Back-end Sênior (Vaga Interna)', 'dataCandidatura': '28/07/2024', 'status': 'Em Análise', 'classeStatus': 'analise'},
-        {'id': 2, 'colaboradorId': 1, 'tituloVaga': 'Engenheiro de Dados (Vaga Interna)', 'dataCandidatura': '22/07/2024', 'status': 'Entrevista Agendada', 'classeStatus': 'aprovado'},
-        {'id': 3, 'colaboradorId': 1, 'tituloVaga': 'Product Owner (Vaga Interna)', 'dataCandidatura': '15/07/2024', 'status': 'Rejeitado', 'classeStatus': 'rejeitado'},
-    ]
-    
-    # 1. Salva a candidatura no dicionário 'candidaturas' global do db_mock
-    for candidatura in candidaturas_ana:
-        db_mock.salvar_candidatura(candidatura)
-        # 2. CHAMA O MÉTODO CORRETO: 'salvar_inscricao_vaga'
-        # Isso garante que a lista 'inscricoes_de_vaga' do objeto Colaborador seja populada.
-        colaborador_ana.salvar_inscricao_vaga(candidatura) 
-
-    # 3. Salva o Colaborador (e seu estado, incluindo a lista de inscrições)
-    db_mock.salvar_colaborador(colaborador_ana)
-    print(f"✅ Colaborador '{colaborador_ana.nome}' salvo com sucesso!")
-
-    # --- Colaborador 2: Bruno Costa ---
-    print("\n--- Colaborador 2: Bruno Costa ---")
-    colaborador_bruno = Colaborador(
-        id=2, 
-        nome='Bruno Costa', 
-        email='bruno.costa@ready2work.com',
-        cargo_atual='Desenvolvedor Back-end Sênior', 
-        setor='Tecnologia',
-        gestor='Gestor Exemplo',
-        tempo_empresa='15/03/2020'
-    )
-    
-    # Adicionando habilidades
-    colaborador_bruno.adicionar_habilidade({'name': 'Python', 'level': 'Avancado'})
-    colaborador_bruno.historico_carreira = [
-        {'role': 'Desenvolvedor Back-end Sênior', 'period': 'Fev/2022 - Atual'},
-    ]
-    
-    db_mock.salvar_colaborador(colaborador_bruno)
-    print(f"✅ Colaborador '{colaborador_bruno.nome}' salvo com sucesso!")
-
-    # --- Gestor ---
-    print("\n--- Gestor ---")
-    gestor_exemplo = Gestor(
+    colaborador_1 = Colaborador(
         id=1,
-        nome="Carlos Pereira",
-        email="gestor@ready2work.com", 
-        setor_responsavel="Tecnologia",
-        permissao="manager"
+        nome="Ana Silva",
+        email="ana.silva@ready2work.com",
+        cargo="Desenvolvedora Front-end Pleno",
+        setor="Tecnologia",
+        id_gestor_atual=1,
+        data_admissao="2022-01-10",
+        habilidades_tecnicas=[
+            {"nome": "React", "nivel": "Avançado"},
+            {"nome": "JavaScript", "nivel": "Avançado"},
+            {"nome": "CSS", "nivel": "Intermediário"}
+        ],
+        soft_skills=["Comunicação", "Colaboração", "Resolução de Problemas"],
+        trilhas_aprendizado=["Front-end Avançado", "Design Systems"],
+        treinamentos_e_certificados=[
+            "Curso Avançado de React Hooks",
+            "Workshop de Design Systems"
+        ],
+        historico_performance=[
+            {"ano": 2023, "avaliacao": "Excelente"},
+            {"ano": 2022, "avaliacao": "Bom"}
+        ],
+        historico_cargos=[
+            {"cargo": "Front-end Pleno", "periodo": "2023 - Atual"},
+            {"cargo": "Front-end Júnior", "periodo": "2022 - 2023"}
+        ],
+        candidaturas=[],
+        roles=["colaborador"]
     )
 
-    db_mock.salvar_gestor(gestor_exemplo)
-    print(f"✅ Gestor '{gestor_exemplo.nome}' salvo com sucesso!")
+    db_mock.salvar_colaborador(colaborador_1)
+    print(f"✅ Colaborador '{colaborador_1.nome}' salvo com sucesso!")
 
-    print("\n🚀 Banco de dados semeado com sucesso!")
+    # -----------------------------------------------------------
+    # COLABORADOR 2
+    # -----------------------------------------------------------
+    colaborador_2 = Colaborador(
+        id=2,
+        nome="Bruno Costa",
+        email="bruno.costa@ready2work.com",
+        cargo="Desenvolvedor Back-end Sênior",
+        setor="Tecnologia",
+        id_gestor_atual=1,
+        data_admissao="2020-03-15",
+        habilidades_tecnicas=[
+            {"nome": "Python", "nivel": "Avançado"},
+            {"nome": "Django", "nivel": "Avançado"},
+            {"nome": "PostgreSQL", "nivel": "Intermediário"},
+            {"nome": "Docker", "nivel": "Intermediário"}
+        ],
+        soft_skills=["Liderança", "Pensamento Analítico"],
+        trilhas_aprendizado=["Arquitetura de Software", "APIs Avançadas"],
+        treinamentos_e_certificados=[
+            "Arquitetura de Microsserviços",
+            "Boas práticas com REST APIs"
+        ],
+        historico_performance=[
+            {"ano": 2023, "avaliacao": "Excelente"},
+            {"ano": 2021, "avaliacao": "Bom"}
+        ],
+        historico_cargos=[
+            {"cargo": "Back-end Sênior", "periodo": "2022 - Atual"},
+            {"cargo": "Back-end Pleno", "periodo": "2020 - 2022"}
+        ],
+        candidaturas=[],
+        roles=["colaborador"]
+    )
 
-if __name__ == '__main__':
+    db_mock.salvar_colaborador(colaborador_2)
+    print(f"✅ Colaborador '{colaborador_2.nome}' salvo com sucesso!")
+
+    # -----------------------------------------------------------
+    # GESTOR
+    # -----------------------------------------------------------
+
+    gestor = Gestor(
+        id_colaborador=1,
+        permissao="gestor",
+        equipes=[1, 2],
+        vagas_abertas=[]
+    )
+
+    db_mock.salvar_gestor(gestor)
+    print(f"✅ Gestor do colaborador ID 1 salvo com sucesso!")
+
+    print("🚀 Banco de dados semeado com sucesso!")
+
+
+if __name__ == "__main__":
     seed_database()
