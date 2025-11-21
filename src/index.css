@@ -1,5 +1,5 @@
 /* Importa a fonte Poppins para um visual moderno */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
 
 /* Variáveis de cor para o tema escuro, agora disponíveis globalmente */
 :root {
@@ -65,4 +65,116 @@ body {
   color: var(--glow-color);
   text-shadow: 0 0 10px var(--glow-color);
   margin-bottom: 1rem;
+}
+
+/* //DIVISÃO */
+
+  /* Cores adaptadas para roxo/magenta, mantendo o estilo Glass/Dark Mode */
+  :root {
+    --glow-color: #A855F7; /* Roxo/Magenta escuro e sofisticado */
+    --color-primary: var(--glow-color); 
+    --color-dark-bg: #111; /* Fundo principal escuro */
+    --color-card-bg-raw: 25, 25, 40; /* Usado para o efeito glass */
+    --color-card-bg: rgba(var(--color-card-bg-raw), 0.75); /* Fundo dos cards, glass */
+    --color-text-light: #F0F0F0; 
+    --color-text-secondary: #A0A0A0;
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .bg-dark-custom {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    /* Adicionando o gradiente de fundo sutil do seu CSS */
+    background-image: radial-gradient(circle at 1% 1%, hsla(240, 80%, 15%, 0.5) 0px, transparent 50%),
+                      radial-gradient(circle at 99% 99%, hsla(300, 80%, 20%, 0.5) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .text-primary-custom {
+    color: var(--color-primary) !important;
+  }
+  .bg-primary-custom {
+    background-color: var(--color-primary) !important;
+  }
+
+  /* Botões adaptados ao estilo Glass (Roxo) */
+  .btn-primary-custom {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .btn-primary-custom:hover {
+    background-color: #8B5CF6; /* Tom mais escuro */
+    border-color: #8B5CF6;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8); /* Brilho Roxo */
+  }
+
+  .btn-outline-light-custom {
+    color: var(--color-text-light);
+    border-color: var(--color-text-light);
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .btn-outline-light-custom:hover {
+    background-color: rgba(240, 240, 255, 0.1);
+    border-color: var(--color-text-light);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Efeito de vidro fosco (Glass Card) */
+  .card-custom {
+    background: var(--color-card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px 0 rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--glow-color); /* Brilho Roxo no hover */
+  }
+
+  /* Estilo para ícones com brilho (Roxo) */
+  .icon-glow {
+    display: inline-flex;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: rgba(var(--color-card-bg-raw), 0.5); /* Fundo glass sutil */
+    color: var(--glow-color);
+    text-shadow: 0 0 15px var(--glow-color);
+    margin-bottom: 1rem;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); /* Adiciona o brilho Roxo ao redor */
+  }
+
+  /* Outros ajustes */
+  .hero-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card {
+    border-left: 3px solid var(--color-primary);
+    padding-left: 1rem;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+  }
+
+  .fade-section {
+    opacity: 0; /* Move levemente para baixo para dar o efeito de "subida" */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estado visível (com fade-in e posição normal) */
+.fade-section.is-visible {
+    opacity: 1;
 }
