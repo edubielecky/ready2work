@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ManagerDashboard.css'; // Importa o CSS específico
+import './managerDashboard.css'; // Importa o CSS específico
 
 // Dados fictícios para as aprovações
 const pendingApprovalsData = [
